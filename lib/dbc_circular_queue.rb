@@ -35,7 +35,6 @@ class DbcCircularQueue
 		empty_check
 		elem = collection[start_index]
 		@start_index = advance(start_index)
-		
 		elem
 	end
 
