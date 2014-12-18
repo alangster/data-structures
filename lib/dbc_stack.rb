@@ -13,7 +13,7 @@ class DbcStack
   end
 
   def push(elem)
-  	@collection << elem
+  	@collection[collection.length] = elem
   end
 
   def pop
