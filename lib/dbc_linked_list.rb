@@ -1,38 +1,40 @@
 class DBCLinkedList
 
+	attr_reader :head
+
   def initialize
   	# no nodes, so set head to nil
   	@head = nil
   end
 
   def empty?
-  	@head.nil?
+  	head.nil?
   end
 
   def size
   	return 0 if empty?
-  	@head.size
+  	head.size
   end
 
   def to_a
   	return [] if empty?
-  	@head.to_a
+  	head.to_a
   end
 
   def append(data)
   	if empty?
   		@head = ListNode.new(data)
   	else
-  		@head.append(data)
+  		head.append(data)
   	end
   end
 
   def find(data = nil, &block)
   	return nil if empty?
   	if data.nil?
-  		@head.find_by_predicate(&block)
+  		head.find_by_predicate(&block)
   	else
-	  	@head.find(data)
+	  	head.find(data)
 	  end
   end
 
@@ -42,34 +44,39 @@ class DBCLinkedList
   end
 
   def insert_after(data, node)
-  	@head.insert_after(data, node)
+  	head.insert_after(data, node)
   end
 
   def delete(node)
   	return nil if empty?
-  	if @head == node
-  		@head = @head.next_node
+  	if head == node
+  		@head = head.next_node
   	else
-	  	@head.delete(node)
+	  	head.delete(node)
 	  end
   end
 
   def map(&block)
   	return nil if empty?
-  	@head.map(&block)
+  	head.map(&block)
   end
 
   def reduce(memo = nil, &block)
   	return nil if empty?
-  	@head.reduce(memo, &block)
+  	head.reduce(memo, &block)
   end
 
   def insert_in_order(data)
-  	if @head.nil? || @head.data > data
+  	if head.nil? || head.data > data
   		prepend(data)
   	else
-  		@head.insert_in_order(data)
+  		head.insert_in_order(data)
   	end
+  end
+
+  def map_with(other_list, &block)
+  	# ensure that what is passed is a node, rather than a list
+  	head.map_with(other_list.head, &block)
   end
   
 end
@@ -135,10 +142,11 @@ class ListNode
   end
 
   def map(&block)
+  	result = [yield(self.data)]
   	if next_node.nil?
-  		return [yield(self.data)]
+  		result
   	else
-  		[yield(self.data)] + next_node.map(&block)
+  		result + next_node.map(&block)
   	end
   end
 
@@ -175,6 +183,15 @@ class ListNode
   		next_node.find_by_predicate(&block)
   	else
   		nil
+  	end
+  end
+
+  def map_with(node, &block)
+  	result = [yield(self.data, node.data)]
+  	if next_node
+  		result + next_node.map_with(node.next_node, &block)
+  	else
+  		result
   	end
   end
   
