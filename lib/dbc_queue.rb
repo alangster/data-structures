@@ -15,12 +15,15 @@ class DbcQueue
 	end
 
 	def enqueue(elem)
-		@collection << elem
+		@collection[collection.count] = elem
 	end
 
 	def dequeue
 		raise ::EmptyException if empty?
-		@collection.shift
+		# again, doing things very literally
+		elem = collection[0]
+		@collection = collection[1..-1]
+		elem
 	end
 
 end
