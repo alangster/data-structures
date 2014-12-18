@@ -140,28 +140,28 @@ describe "DBCLinkedList" do
   context "can insert in order (bonus)" do
 
     it "can insert into an empty list" do
-      @l.insert(4)
+      @l.insert_in_order(4)
       expect(@l.to_a).to eql [4]
     end
 
     it "can insert at the beginning" do
-      @l.insert(4)
-      @l.insert(2)
+      @l.insert_in_order(4)
+      @l.insert_in_order(2)
       expect(@l.to_a).to eql [2, 4]
     end
 
     it "can insert in the middle" do
-      @l.insert(4)
-      @l.insert(2)
-      @l.insert(3)
+      @l.insert_in_order(4)
+      @l.insert_in_order(2)
+      @l.insert_in_order(3)
       expect(@l.to_a).to eql [2, 3, 4]
     end
     
     it "can insert at the end" do
-      @l.insert(4)
-      @l.insert(2)
-      @l.insert(3)
-      @l.insert(5)
+      @l.insert_in_order(4)
+      @l.insert_in_order(2)
+      @l.insert_in_order(3)
+      @l.insert_in_order(5)
       expect(@l.to_a).to eql [2, 3, 4, 5]
     end
     
