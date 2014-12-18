@@ -17,21 +17,18 @@ class DbcArray
   end
 
   def insert(elem, at: 0)
-		pos = at
-  	if at != 0
-  		pos = collection.index(at) 
-  	end
-  	@collection = collection[0...pos] + [elem] + collection[pos..-1]
+  	@collection = collection[0...at] + [elem] + collection[at..-1]
   end
 
   def at(pos, put: nil)
-  	raise ::OutOfBoundException unless (0..collection.length).include?(pos.abs) #using collection.length so that elements can be inserted at the end
-  	collection[pos] = put if put
-  	collection[pos]
+    #using collection.length so that elements can be inserted at the end
+    raise ::OutOfBoundException unless (0..collection.length).include?(pos.abs) 
+    return collection[pos] if put.nil?
+  	collection[pos] = put
   end
 
   def append(elem)
-  	@collection << elem
+  	@collection[collection.length] = elem
   	self
   end
 
